@@ -1,0 +1,15 @@
+@import model.User
+@(users: List[User])
+
+@main("application.name"){
+  <dl class="users">
+    <h3> id firstname lastname location email activate createdAt countOfContacts </h3>
+    @for(user <- users){
+    <dt>@user.id</dt>
+    <dd>@user.firstName | @user.lastName | @user.location | @user.email |
+      @user.deactivated |@user.createdAt | @user.contects</dd>
+    <dd> <h5> NEXT USER </h5> </dd>
+
+  }
+  </dl>
+}
