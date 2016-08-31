@@ -1,4 +1,3 @@
-﻿# AdminDash
 # Play 2.5.0 AdminDash 
 An AdminDash application built on Play Framework Scala With Couchbase database 
 
