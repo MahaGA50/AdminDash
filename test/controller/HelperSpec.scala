@@ -4,15 +4,15 @@ package controller
 import com.couchbase.client.java.CouchbaseCluster
 import com.couchbase.client.java.document.RawJsonDocument
 import controllers.Helper
-import model.{Email, User}
-import org.scalatest.{BeforeAndAfter, FlatSpec}
+import model.{Contact, Email, User}
+import org.scalatest.{BeforeAndAfterAll, BeforeAndAfter, FlatSpec}
 import play.api.libs.json.Json
 import rx.lang.scala.JavaConversions._
 
-class HelperSpec extends FlatSpec with BeforeAndAfter {
-  lazy val cluster = CouchbaseCluster.create("127.0.0.1")
+class HelperSpec extends FlatSpec with BeforeAndAfterAll {
+  lazy implicit val cluster = CouchbaseCluster.create("127.0.0.1")
   lazy implicit val bucket = cluster.openBucket("smardex").async()
-  before {
+  override def beforeAll {
     val user1 =
       """{
                  |	"createdAt": "1470921294999",
@@ -53,6 +53,19 @@ class HelperSpec extends FlatSpec with BeforeAndAfter {
      assert(Helper.getAllUsersDocument().exists(_.firstName =="Radwa") == true)
   }
 
+  " An users contacts " should " not empty " in {
+    assert(!Helper.countUserContacts().isEmpty)
+  }
 
+  " An users contacts " should " exists count and not equal " in {
+    assert(Helper.countUserContacts().exists(_.value !=0) == true)
+  }
+  " An users contacts " should " type is list[contact] " in {
+    assert(Helper.countUserContacts.isInstanceOf[List[Contact]])
+  }
 
+  override def afterAll {
+    bucket.remove("0acf7858-a4d0-493b-99e4-f1aa69b7d880")
+    bucket.close()
+  }
 }

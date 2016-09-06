@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
-import model.{DBConnection, User}
+import model.{Contact, DBConnection, User}
 import play.api.mvc._
 
 @Singleton
@@ -15,7 +15,7 @@ class Application @Inject() (dbConn: DBConnection ) extends Controller {
   def getAllUsers = Action {
     val allDocument :List[User] = Helper.getAllUsersDocument
     val mapOfAlldoc = Helper.changeToMap(allDocument)
-    val countOfcontact = Helper.countUserContacts
+    val countOfcontact : List[Contact] = Helper.countUserContacts
 
     countOfcontact.foreach( e => { mapOfAlldoc.get(e.key) match {
       case Some(user) => mapOfAlldoc += (e.key -> user.copy(contects = Some(e.value)))
