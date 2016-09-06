@@ -14,7 +14,6 @@ class Application @Inject() (dbConn: DBConnection ) extends Controller {
 
   def getAllUsers = Action {
     val allDocument :List[User] = Helper.getAllUsersDocument
-    println(allDocument.toString())
     val mapOfAlldoc = Helper.changeToMap(allDocument)
     val countOfcontact = Helper.countUserContacts
 
