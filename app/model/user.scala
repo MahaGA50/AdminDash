@@ -2,10 +2,6 @@ package model
 
 import play.api.libs.json.{Json, Reads, JsPath, Writes}
 import play.api.libs.functional.syntax._
-
-/**
-  * Created by maha on 23/08/16.
-  */
 case class User(id:String, firstName: String, lastName: String, email:Email, location:String,
                   deactivated:Boolean, createdAt:String, contects:Option[Int]= Some(0))
 

@@ -1,16 +1,20 @@
 package controllers
 
-import model.{User}
+import javax.inject.{Inject, Singleton}
+
+import model.{DBConnection, User}
 import play.api.mvc._
 
-class Application extends Controller {
-
+@Singleton
+class Application @Inject() (dbConn: DBConnection ) extends Controller {
+  implicit lazy val bucket = dbConn.bucket
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
   }
 
   def getAllUsers = Action {
     val allDocument :List[User] = Helper.getAllUsersDocument
+    println(allDocument.toString())
     val mapOfAlldoc = Helper.changeToMap(allDocument)
     val countOfcontact = Helper.countUserContacts
 
